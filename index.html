@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./src/css/style.css">
     <title>Hello World</title>
+    <script src="./src/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
     <header>
@@ -58,6 +59,93 @@
         </div>
         <h1>Hello World</h1>
         <b>ElectronJS</b>
+
+        <form>
+            <input type="text" id="ProjectName"><br>
+            <input type="text" id="ctrl" placeholder="Caminho"/>
+            <button type="button" onclick="horaDoShow();">Enviar</button>
+        </form>
+
     </header>
+    <script type="text/javascript">
+
+        const fs = require('fs');
+        const fse = require('fs-extra');
+
+
+        function horaDoShow(){
+            var dirtemp = './teste';
+            var dirPersist = document.getElementById("ctrl").value +"/"+ document.getElementById("ProjectName").value;
+
+            if (!fs.existsSync(dirtemp)){
+                fs.mkdirSync(dirtemp);
+            }
+            var docContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+            `;
+
+            fs.appendFile("./teste/mynewfile1.html", docContent, function (err) {
+                if (err) throw err;
+                console.log('Saved!');
+            });
+            fs.appendFile("./teste/mynewfile2.html", docContent, function (err) {
+                if (err) throw err;
+                console.log('Saved!');
+            });
+            fs.appendFile("./teste/mynewfile3.html", docContent, function (err) {
+                if (err) throw err;
+                console.log('Saved!');
+            });
+
+
+            fse.move('./teste', dirPersist, err => {
+                if(err) return console.error(err);
+                console.log('success!');
+            });
+        }
+       
+
+
+  
+
+
+
+
+        // create the text file as a Blob:
+        // var blob = new Blob(["hello world"],{type: "text/plain"});
+        
+        // // download the file:
+        // download(blob,"text-file.txt");
+
+
+        // function download(blob,name) {
+        //     var url = URL.createObjectURL(blob),
+        //         div = document.createElement("div"),
+        //         anch = document.createElement("a");
+
+        //     document.body.appendChild(div);
+        //     div.appendChild(anch);
+
+        //     anch.innerHTML = "&nbsp;";
+        //     div.style.width = "0";
+        //     div.style.height = "0";
+        //     anch.href = url;
+        //     anch.download = name;
+            
+        //     var ev = new MouseEvent("click",{});
+        //     anch.dispatchEvent(ev);
+        //     document.body.removeChild(div);
+        // }
+    </script>
 </body>
 </html>
